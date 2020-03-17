@@ -4,27 +4,40 @@
 <div class="p-4">
 	<h3 class="text-center">Your Orders</h3>
 	<div>
-		<div class="m-5 text-center">
-			<table class="table  m-auto" style="width:100%;">
+		<div class="mt-5 text-center">
+			<table class="table table-responsive m-auto" style="max-width:100%;">
 				<thead>
 					<tr>
-						<th>Items</th>
-						<th>By</th>
-						<th>Quantity</th>
-						<th>Price</th>
+						<th>S.N</th>
+						<th>Date</th>
+					    <th class="text-center" style="width:10%;">Orders</th>
 						<th>Address</th>
 						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>
-
+					@foreach($orders as $key => $order)
 					<tr>
-						@foreach($orders as $key => $order)
-						@foreach($order->saleItem as $order_item)
-						<td>{{ $order_item->item->name}}</td>
-						<td>{{ $order_item->medium->name}}</td>
-						<td>{{ $order_item->quantity}}</td>
-						<td>{{ $order_item->price }}</td>
+						<td>{{ $key+1 }}</td>
+					<td>{{ $order->created_at->toDateString() }}</td>
+						<td>
+							<table class="table-responsive p-3 text-center">
+							  <tr class="bg-success">
+								<th>Item </th>
+								<th> Medium</th>
+								<th>Price</th>
+								<th>Quantity</th>
+							  </tr>
+							@foreach($order->saleItem as $sale)
+							  <tr class="bg-danger text-white">
+								<td>{{ $sale->item->name }}</td>
+								<td> {{ $sale->medium->name }}</td>
+								<td>{{ $sale->price }}</td>
+								<td>{{ $sale->quantity }}</td>
+							  </tr>
+							  @endforeach
+							</table>
+						  </td>
 						<td>{{ $order->address }}</td>
 						<td>
 						 @if($order->is_started==1 && $order->is_delivered ==0)
@@ -36,7 +49,6 @@
 						</td>	
 						@endif
 					</tr>
-					@endforeach
 					@endforeach
 				</tbody>
 			</table>

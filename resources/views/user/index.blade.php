@@ -145,10 +145,10 @@ data-name="{{$place->name}}" >{{ $place->name }}</li>
 
 <script>
   $('document').ready(function () {
-	let markers = {};
-	axios.get('https://global.test/getPlaces')
+    $('#tabs').hide();
+	 let markers = {};
+	 axios.get('https://global.test/getPlaces')
 		.then(function (response) {
-      $('#tabs').hide();
 			let places = response.data;
 			var mymap = L.map('mapid').setView([27.4293, 85.0313], 15);
 			places.forEach(element => {

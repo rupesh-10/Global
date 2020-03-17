@@ -17,7 +17,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet">
   <!-- Icons -->
   <link href="{{asset('nucleo/css/nucleo.css')}}" rel="stylesheet" />
-  <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
   <!-- CSS Files -->
   <link href="{{ asset('css/argon.css')}}" rel="stylesheet" />

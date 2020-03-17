@@ -2,7 +2,7 @@
 @section('content')
 <form action="/checkout/order" method="post" id="form">
   @csrf
-  <div class="container-fluid">
+  <div class="container-fluid mt-2">
     <h1 class="font-weight-bold text-info text-center">Checkout</h1>
     <div class="row d-flex p-3">
       {{-- <div class="col-md-12 order-md-1 d-flex"> --}}
@@ -79,44 +79,48 @@
 
         <div class="row pb-3 d-flex" id="select_order">
           <div class="col-md-3 d-flex">
-            <label class="p-2 col-md-4">
+            <label class="p-2 col-md-3">
               <h5>Item: </h5>
             </label>
-            <select class="form-control items col-md-10  @error('items') is-invalid @enderror " name="items[]"
-              id="item_0">
-              <option>Choose Item</option>
-              @foreach($items as $item)
-              <option value="{{ $item->id }}">{{  $item->name   }}</option>
-              @endforeach
-            </select>
-            @error('items')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <div class="col-md-12">
+              <select class="form-control items col-md-10  @error('items') is-invalid @enderror " name="items[]"
+                id="item_0">
+                <option selected="true" disabled>Choose Item</option>
+                @foreach($items as $item)
+                <option value="{{ $item->id }}">{{  $item->name   }}</option>
+                @endforeach
+              </select>
+              @error('items')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
           </div>
           <div class="col-md-3 d-flex">
             <label class="p-2 col-md-3">
               <h5> By: </h5>
             </label>
-            <select class="form-control mediums col-md-10 @error('mediums') is-invalid @enderror" name="mediums[]"
-              id="medium_0">
-              <option>Choose Medium</option>
-              @foreach($mediums as $medium)
-              <option value="{{ $medium->id }}">{{ $medium->name }}</option>
-              @endforeach
-            </select>
-            @error('mediums')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
+            <div class="col-md-12">
+              <select class="form-control mediums col-md-10 @error('mediums') is-invalid @enderror" name="mediums[]"
+                id="medium_0">
+                <option selected='true' disabled>Choose Medium</option>
+                @foreach($mediums as $medium)
+                <option value="{{ $medium->id }}">{{ $medium->name }}</option>
+                @endforeach
+              </select>
+              @error('mediums')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
           </div>
           <div class="col-md-2 d-flex">
             <label class="p-2 col-md-5">
               <h5> Qty: </h5>
             </label>
-            <input type="number" class="form-control quantities p-3 col-md-8" name="quantities[]" value="1" min="1"
+            <input type="number" class="form-control quantities p-2 col-md-8" name="quantities[]" value="1" min="1"
               max="25" id="quantity_0">
           </div>
           <div class="col-md-2 d-flex">
@@ -129,7 +133,7 @@
               <span class="p-2">Rs. </span>
             </h5>
 
-            <input type="text" readonly name='prices[]' id="price_0" class="form-control col-md-8" value="0">
+            <input type="text" readonly name='prices[]' id="price_0" class="form-control prices col-md-8" value="0">
           </div>
           <div class="col-md-2 text-right">
             <a class="btn btn-danger text-white btn-rounded" id="add"> + </a>
@@ -141,43 +145,23 @@
     </div>
   </div>
   <input type="hidden" name="is_finalize" value=0 id="is_finalize">
-  <div class="mt-3 text-center">
+  <div class=" text-center">
     <button class="btn btn-primary btn-rounded">Continue to Order</button>
   </div>
   </div>
 </form>
 <div class="custom-control mb-3">
   <form action="https://uat.esewa.com.np/epay/main" method="POST" id="payWithEsewa">
-    <input value="100" name="tAmt" type="hidden" id="tAmt"
-    <input value="90" name="amt" type="hidden">
-    <input value="5" name="txAmt" type="hidden">
-    <input value="2" name="psc" type="hidden">
-    <input value="3" name="pdc" type="hidden">
+    <input  name="tAmt" type="hidden" id="tAmt">
+    <input  name="amt" type="hidden" id="amt">
+    <input value="0" name="txAmt" type="hidden">
+    <input value="0" name="psc" type="hidden">
+    <input value="0" name="pdc" type="hidden">
     <input value="epay_payment" name="scd" type="hidden">
     <input value="GlobalSuppliers" name="pid" type="hidden">
     <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="hidden" name="su">
     <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="hidden" name="fu">
   </form>
-</div>
-
-<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 @guest
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
@@ -189,7 +173,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <h3 class="text-danger text-center">You haven't login.</h3>
+        <h3 class="text-danger text-center">Please Login.</h3>
       </div>
       <div class="modal-footer">
         <a type="button" class="btn btn-primary" href="/login">Login</a>
@@ -201,115 +185,134 @@
 @endguest
 @section('scripts')
 
-<script>
-    $(document).ready(function(){
-        $("#esewaButton").on('click',function(event){
-          event.preventDefault();
-          $("#payWithEsewa").submit();
-        })
+    <script>
+      $(document).ready(function(){
+            $("#esewaButton").on('click',function(event){
+              event.preventDefault();
+              $('#amt').val(total_price);
+              $('#tAmt').val(total_price);
+              $("#payWithEsewa").submit();
+             
+            })
+        }); 
+    </script>
+    <script>
+      $(document).ready(function(){
+            $("#myModal").modal('show');
+        });
+      $('#medium_checkbox').on('click',function(){
+
+    if($(this).is(':checked')){
+      $('#quantity').attr('disabled',false)
+    }
+    else{
+      $('#quantity').attr('disabled',true)
+    }
     }); 
-</script>
-<script>
-  $(document).ready(function(){
-        $("#myModal").modal('show');
-    });
-  $('#medium_checkbox').on('click',function(){
+    let indexOfOrders= 0;
+    function createOrderColumn(){
+      indexOfOrders++;
+      // console.log(indexOfOrders)
+      var selectOrder = `
+    <div class="row" id="select_order">
+                <div class="col-md-3 d-flex">
+                <label class= 'p-2 col-md-4'><h5>Item: </h5> </label>
+                <select class="form-control col-md-10 items" name="items[]" id="item_${indexOfOrders}">f
+                <option selected="true" disabled>Choose Item</option>
+                  @foreach($items as $item)
+                <option value="{{ $item->id }}">{{  $item->name   }}</option>
+                @endforeach
+                </select>
+                </div>
+                <div class="col-md-3 d-flex">
+                <label class= "p-2 col-md-3"> <h5> By: </h5> </label>
+                <select class="form-control col-md-10 mediums" name= "mediums[]" id="medium_${indexOfOrders}">
+                <option selected="true" disabled>Choose Medium</option>
+                @foreach($mediums as $medium)
+              <option value="{{ $medium->id }}">{{ $medium->name }}</option>
+                @endforeach
+                </select> 
+                </div>
+                <div class="col-md-2 d-flex">
+                <label class= 'p-2 col-md-5'> <h5> Qty: </h5> </label>
+                <input type="number" class="form-control quantities col-md-8 p-2 " name="quantities[]" id="quantity_${indexOfOrders}" min="1" max="25" value="1">
+                </div>
+                <div class="col-md-2 d-flex">
+                <label class= 'p-2 col-md-6'>
+                  <h5>
+                  Price:
+                  </h5> 
+                </label>
+                <h5 class="text-danger prices p-2 d-flex">
+                  <span>Rs. </span>
+                </h5>
+                  <input type="text" readonly name='prices[]' id="price_${indexOfOrders}" class="form-control prices col-md-8" value="0">
+              </div>
+              <hr class="col-md-11">
 
-if($(this).is(':checked')){
-  $('#quantity').attr('disabled',false)
-}
-else{
-  $('#quantity').attr('disabled',true)
-}
-}); 
-let indexOfOrders= 0;
-function createOrderColumn(){
-  indexOfOrders++;
-  // console.log(indexOfOrders)
-  var selectOrder = `
-<div class="row" id="select_order">
-            <div class="col-md-3 d-flex">
-            <label class= 'p-2 col-md-4'><h5>Item: </h5> </label>
-            <select class="form-control col-md-10 items" name="items[]" id="item_${indexOfOrders}">f
-            <option>Choose Item</option>
-              @foreach($items as $item)
-            <option value="{{ $item->id }}">{{  $item->name   }}</option>
-            @endforeach
-            </select>
-            </div>
-            <div class="col-md-3 d-flex">
-            <label class= "p-2 col-md-3"> <h5> By: </h5> </label>
-            <select class="form-control col-md-10 mediums" name= "mediums[]" id="medium_${indexOfOrders}">
-            <option>Choose Medium</option>
-            @foreach($mediums as $medium)
-          <option value="{{ $medium->id }}">{{ $medium->name }}</option>
-            @endforeach
-            </select> 
-            </div>
-            <div class="col-md-2 d-flex">
-            <label class= 'p-2 col-md-5'> <h5> Qty: </h5> </label>
-            <input type="number" class="form-control quantities col-md-8 p-2 " name="quantities[]" id="quantity_${indexOfOrders}" min="1" max="25" value="1">
-            </div>
-            <div class="col-md-2 d-flex">
-            <label class= 'p-2 col-md-6'>
-              <h5>
-              Price:
-              </h5> 
-            </label>
-            <h5 class="text-danger prices p-2 d-flex">
-              <span>Rs. </span>
-            </h5>
-              <input type="text" readonly name='prices[]' id="price_${indexOfOrders}" class="form-control col-md-8" value="0">
-          </div>
-          <hr class="col-md-11">
+              </div>
 
-          </div>
-
-`
-  return selectOrder;
-}
-$('#add').on('click',function(){
-  // $(createOrderColumn()).append('#select_order');
+    `
+      return selectOrder;
+    }
+    $('#add').on('click',function(){
+      // $(createOrderColumn()).append('#select_order');
 
 
-  $("#listOfOrders").append($(createOrderColumn()))
-})
+      $("#listOfOrders").append($(createOrderColumn()))
+    })
 
-$('#sub').on('click',function(){
-  let d = $('[id="select_order"]');
-  if(d.length >1) { d[d.length-1].remove();indexOfOrders--};
-})
+    $('#sub').on('click',Sub)
+    function Sub(){
+      let d = $('[id="select_order"]');
+      if(d.length >1) { d[d.length-1].remove();indexOfOrders--};
+    }
 
 
 
-$(document).on("change",".items",Change)
+    $(document).on("change",".items",Change)
 
-$(document).on("change",".mediums",Change)
+    $(document).on("change",".mediums",Change)
 
-$(document).on('change',".quantities",Change)
-
+    $(document).on('change',".quantities",Change)
+    var total_price = 0;
 function Change(){
-  let medium = $('#medium_'+indexOfOrders).val();
-  let index = ($('#medium_'+indexOfOrders)[0].id).split("_")[1];
-  let item = $('#item_'+index).val();
-  let quantity = $('#quantity_'+index).val();
-  let place_id = $('#selectedPlace').val();
-  getPrice(medium,item,index,quantity,place_id)
+      let medium = $('#medium_'+indexOfOrders).val();
+      let index = ($('#medium_'+indexOfOrders)[0].id).split("_")[1];
+      let item = $('#item_'+index).val();
+      let quantity = $('#quantity_'+index).val();
+      let place_id = $('#selectedPlace').val();
+      getPrice(medium,item,index,quantity,place_id)
+      let medium_total = $('.mediums').map(function(){return $(this).val();}).get();
+      let item_total = $('.items').map(function(){return $(this).val();}).get();
+      let result = false;
+          for(let i = 0; i < item_total.length;i++) {
+            if(item_total.indexOf(item_total[i]) !== item_total.lastIndexOf(item_total[i]) && medium_total.indexOf(medium_total[i]) !== medium_total.lastIndexOf(medium_total[i])){
+                result = true;
+                break;
+            }
+          }
+          if(result) {
+            Sub();
+          } 
+        
 }
 
 function getPrice(medium,item,index,quantity,place_id){
   axios.get('https://global.test/getPrice',{params:{item:item,medium:medium,place:place_id}})
 		.then(function (response) {
       let price = response.data.price;
-      console.log($('#price_'+index))
-      console.log(response)
       $('#price_'+index).val((parseFloat(price)*quantity)||'0');
+        total_price+=parseInt($('#price_'+index).val());      
     })
 }
+   
+  
+
 //Khalti Payment
    var config = {
           
-            "publicKey": "test_public_key_1d9efa61b8ed4ec5aa397af1049939e7",
+            "publicKey": "test_public_key_47afe119e7b5446c82b17ecdcc5549ad",
             "productIdentity": "1234567890",
             "productName": "Dragon",
             "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
@@ -321,10 +324,10 @@ function getPrice(medium,item,index,quantity,place_id){
                     console.log(payload)
                 },
                 onError (error) {
-                    alert(error);
+                    alert("Error")
                 },
                 onClose () {
-                    alert('widget is closing');
+                   
                 }
             }
         };
@@ -332,7 +335,7 @@ function getPrice(medium,item,index,quantity,place_id){
         var checkout = new KhaltiCheckout(config);
         var btn = document.getElementById("khalti_payment");
         btn.onclick = function () {
-            checkout.show({amount: 1000});
+            checkout.show({amount: total_price*100});
         }
 </script>
 

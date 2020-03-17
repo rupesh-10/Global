@@ -76,6 +76,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#guestModal">Track Order</a>
+                </li>
                 @endif
                 @else
                 <li class="nav-item dropdown">
@@ -85,15 +88,17 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                      
+                    <a class="dropdown-item" href="/user/profile/{{ Auth::user()->id }}">My Profile</a>
+                    <a class="dropdown-item" href="/user/orders/{{ Auth::user()->id }}">My Orders</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
+                        @csrf
                         </form>
-                    <a class="dropdown-item" href="/user/orders/{{ Auth::user()->id }}">My Orders</a>
                     </div>
                 </li>
                 @endguest
@@ -101,6 +106,30 @@
         </div>
         </div>
     </nav>
+    <div class="modal" tabindex="-1" role="dialog" id="guestModal">
+        <div class="modal-dialog" role="document">
+        <form action="/guest/order">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Track Your Order</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+       <div class="modal-body">
+              <label>Phone Number</label>
+              <input type="text" name="phone_number" class="form-control">
+        </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary">Track</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+         </form>
+
+        </div>
+      </div>
     <div id="app">
         @yield('content')
     </div>

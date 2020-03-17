@@ -38,8 +38,10 @@ Route::get('/admin/login', function () {
 
 Route::get('/checkout', 'HomeController@checkout');
 Route::post('/checkout/order', 'HomeController@order');
-
+Route::get('/guest/order','Homecontroller@guestOrder');
 
 Route::middleware('auth')->group(function () {
 	Route::get('/user/orders/{id}', 'HomeController@userOrder');
+	Route::get('/user/profile/{id}', 'HomeController@userProfile');
+
 });

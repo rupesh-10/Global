@@ -78,8 +78,8 @@ class HomeController extends Controller
     public function order(Request $request){
         $data = request()->validate([
             'name' => 'required',
-            'items'=>'required|not_in:0',
-            'mediums'=>'required|not_in:0',
+            'items'=>'required',
+            'mediums'=>'required',
             'number'=>'required',
             'address' =>'required',
             'quantities.*' =>'required',
@@ -134,5 +134,18 @@ class HomeController extends Controller
         return view('user.order',compact('orders'));
     }
 
-   
+    public function guestOrder(){
+        request()->validate([
+            'phone_number' => 'required',
+        ]);
+        $phone_number = request()->get('phone_number');
+        $orders = Sale::where('is_guest',1)->where('phone_number',$phone_number)->get();
+        return view('user.guest_order',compact('orders'));
+    }
+
+    public function userProfile($id){
+       $user = User::findorFail($id);
+       $orders = Sale::where('user_id',$id)->get();
+       return view('user.profile',compact('user','orders'));
+    }
 }

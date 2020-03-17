@@ -15,7 +15,7 @@
 
         </div>
       </div>
-      <div id="collapseOne" class="collapse bg-white {{ $errors->count() ? 'show': '' }}" aria-labelledby="headingOne"
+      <div id="collapseOne" class="collapse bg-white show {{ $errors->count() ? 'show': '' }}" aria-labelledby="headingOne"
         data-parent="#accordion">
         <div class="card-body mt-2">
           <form method="post" action="{{ action('Admin\AmountController@store') }}">
