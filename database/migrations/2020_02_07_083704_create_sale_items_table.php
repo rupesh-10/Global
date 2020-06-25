@@ -15,12 +15,12 @@ class CreateSaleItemsTable extends Migration
     {
         Schema::create('sale_items', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('sale_id');
-            $table->index('sale_id');
-            $table->unsignedInteger('item_id');
-            $table->index('item_id');
-            $table->unsignedInteger('medium_id');
-            $table->index('medium_id');
+            $table->bigInteger('sale_id')->unsigned();
+            $table->foreign('sale_id')->references('id')->on('sales')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('item_id')->unsigned();
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('medium_id')->unsigned();
+            $table->foreign('medium_id')->references('id')->on('media')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('price');
             $table->timestamps();

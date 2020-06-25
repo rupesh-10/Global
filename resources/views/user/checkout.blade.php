@@ -10,6 +10,78 @@
 
       {{-- Information Section --}}
       <input type="hidden" id="selectedPlace" value="{{ $place->id }}">
+
+      {{-- Order Section --}}
+
+      <div class="col-md-7 p-4" style=" overflow: auto; height:500px; " id="listOfOrders">
+        <div class="row pb-3">
+          <div class="col-md-9">
+            <h2>Select Your Order</h2>
+          </div>
+          <div class="col-md-2   text-right">
+            <a class="btn btn-danger text-white btn-rounded btn-sm" id="add"> + </a>
+            <a class="btn btn-danger text-white btn-rounded btn-sm" id="sub"> - </a>
+          </div>
+        </div>
+        <div class="row pb-3" id="select_order">
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label">
+                Item:
+              </label>
+              <select class="form-control items  @error('items') is-invalid @enderror " name="items[]" id="item_0">
+                <option selected="true" disabled>Choose Item</option>
+                @foreach($items as $item)
+                <option value="{{ $item->id }}">{{  $item->name   }}</option>
+                @endforeach
+              </select>
+              @error('items')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label">
+                By:
+              </label>
+              <select class="form-control mediums @error('mediums') is-invalid @enderror" name="mediums[]" id="medium_0"
+                style="width:100%;">
+                <option selected='true' disabled>Choose Medium</option>
+                @foreach($mediums as $medium)
+                <option value="{{ $medium->id }}">{{ $medium->name }}</option>
+                @endforeach
+              </select>
+              @error('mediums')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label">
+                Qty:
+              </label>
+              <input type="number" class="form-control quantities p-2" name="quantities[]" value="1" min="1" max="25"
+                id="quantity_0">
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group">
+              <label class="form-control-label">
+                Price(Rs.):
+              </label>
+              <input type="text" readonly name='prices[]' id="price_0" class="form-control prices value=" 0">
+            </div>
+          </div>
+          <hr class="col-md-11">
+        </div>
+      </div>
+
       <div class="col-md-5 p-3" style="height:500px;">
         <div class="row">
           <div class="col-md-12 mb-3">
@@ -56,124 +128,40 @@
         </div>
         <hr class="mb-4">
 
-        <h4 class="mb-3">Payment</h4>
 
-        <div class="d-block my-3">
-          <div class="custom-control">
-            <input type="submit" class="btn btn-success" value="Pay with Esewa" id="esewaButton">
-            <a class="btn text-white" id="khalti_payment" style="background-color: #773292;">Pay with Khalti</a>
-          </div>
-          <div class="custom-control custom-radio mt-3">
-            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input">
-            <label class="custom-control-label" for="paypal">Cash On Delivery</label>
-          </div>
-        </div>
         <hr class="mb-4">
 
       </div>
-
-      {{-- Order Section --}}
-
-      <div class="col-md-7 p-4" style=" overflow: auto; height:500px; " id="listOfOrders">
-        <h2>Select Your Order</h2>
-
-        <div class="row pb-3 d-flex" id="select_order">
-          <div class="col-md-3 d-flex">
-            <label class="p-2 col-md-3">
-              <h5>Item: </h5>
-            </label>
-            <div class="col-md-12">
-              <select class="form-control items col-md-10  @error('items') is-invalid @enderror " name="items[]"
-                id="item_0">
-                <option selected="true" disabled>Choose Item</option>
-                @foreach($items as $item)
-                <option value="{{ $item->id }}">{{  $item->name   }}</option>
-                @endforeach
-              </select>
-              @error('items')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-            </div>
-          </div>
-          <div class="col-md-3 d-flex">
-            <label class="p-2 col-md-3">
-              <h5> By: </h5>
-            </label>
-            <div class="col-md-12">
-              <select class="form-control mediums col-md-10 @error('mediums') is-invalid @enderror" name="mediums[]"
-                id="medium_0">
-                <option selected='true' disabled>Choose Medium</option>
-                @foreach($mediums as $medium)
-                <option value="{{ $medium->id }}">{{ $medium->name }}</option>
-                @endforeach
-              </select>
-              @error('mediums')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-              @enderror
-            </div>
-          </div>
-          <div class="col-md-2 d-flex">
-            <label class="p-2 col-md-5">
-              <h5> Qty: </h5>
-            </label>
-            <input type="number" class="form-control quantities p-2 col-md-8" name="quantities[]" value="1" min="1"
-              max="25" id="quantity_0">
-          </div>
-          <div class="col-md-2 d-flex">
-            <label class="p-2 col-md-6">
-              <h5>
-                Price:
-              </h5>
-            </label>
-            <h5 class="text-danger prices d-flex">
-              <span class="p-2">Rs. </span>
-            </h5>
-
-            <input type="text" readonly name='prices[]' id="price_0" class="form-control prices col-md-8" value="0">
-          </div>
-          <div class="col-md-2 text-right">
-            <a class="btn btn-danger text-white btn-rounded" id="add"> + </a>
-            <a class="btn btn-danger text-white btn-rounded" id="sub"> - </a>
-          </div>
-          <hr class="col-md-11">
-        </div>
-      </div>
     </div>
+    <input type="hidden" name="is_finalize" value=0 id="is_finalize">
   </div>
-  <input type="hidden" name="is_finalize" value=0 id="is_finalize">
-  <div class=" text-center">
-    <button class="btn btn-primary btn-rounded">Continue to Order</button>
-  </div>
+  <div class="text-center">
+    <button class="btn btn-primary btn-rounded">Continue to Payment</button>
   </div>
 </form>
-<div class="custom-control mb-3">
+{{-- <div class="custom-control mb-3">
   <form action="https://uat.esewa.com.np/epay/main" method="POST" id="payWithEsewa">
-    <input  name="tAmt" type="hidden" id="tAmt">
-    <input  name="amt" type="hidden" id="amt">
+    <input name="tAmt" type="hidden" id="tAmt">
+    <input name="amt" type="hidden" id="amt">
     <input value="0" name="txAmt" type="hidden">
     <input value="0" name="psc" type="hidden">
     <input value="0" name="pdc" type="hidden">
     <input value="epay_payment" name="scd" type="hidden">
-    <input value="GlobalSuppliers" name="pid" type="hidden">
-    <input value="http://merchant.com.np/page/esewa_payment_success?q=su" type="hidden" name="su">
-    <input value="http://merchant.com.np/page/esewa_payment_failed?q=fu" type="hidden" name="fu">
-  </form>
-</div>
+    <input value="{{ $pid }}" name="pid" type="hidden">
+<input value="{{ $successurl }}" type="hidden" name="su">
+<input value="{{ $failedurl }}" type="hidden" name="fu">
+</form>
+</div> --}}
 @guest
 <div class="modal" tabindex="-1" role="dialog" id="myModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document">`
     <div class="modal-content">
-      <div class="modal-header">
+
+      <div class="modal-body">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        <h3 class="text-danger text-center">Please Login.</h3>
+        <h2 class="text-danger text-center">Login, for easy order tracking and information</h2>
       </div>
       <div class="modal-footer">
         <a type="button" class="btn btn-primary" href="/login">Login</a>
@@ -185,8 +173,8 @@
 @endguest
 @section('scripts')
 
-    <script>
-      $(document).ready(function(){
+<script>
+  $(document).ready(function(){
             $("#esewaButton").on('click',function(event){
               event.preventDefault();
               $('#amt').val(total_price);
@@ -195,9 +183,9 @@
              
             })
         }); 
-    </script>
-    <script>
-      $(document).ready(function(){
+</script>
+<script>
+  $(document).ready(function(){
             $("#myModal").modal('show');
         });
       $('#medium_checkbox').on('click',function(){
@@ -213,57 +201,61 @@
     function createOrderColumn(){
       indexOfOrders++;
       // console.log(indexOfOrders)
-      var selectOrder = `
-    <div class="row" id="select_order">
-                <div class="col-md-3 d-flex">
-                <label class= 'p-2 col-md-4'><h5>Item: </h5> </label>
-                <select class="form-control col-md-10 items" name="items[]" id="item_${indexOfOrders}">f
+      var selectOrder = 
+   ` <div class="row" id="select_order">
+                <div class="col-lg-3">
+                <div class="form-group">
+                <label class= 'form-control-label'><h5>Item: </h5> </label>
+                <select class="form-control items" name="items[]" id="item_${indexOfOrders}">f
                 <option selected="true" disabled>Choose Item</option>
                   @foreach($items as $item)
                 <option value="{{ $item->id }}">{{  $item->name   }}</option>
                 @endforeach
                 </select>
                 </div>
-                <div class="col-md-3 d-flex">
-                <label class= "p-2 col-md-3"> <h5> By: </h5> </label>
-                <select class="form-control col-md-10 mediums" name= "mediums[]" id="medium_${indexOfOrders}">
+                </div>
+                <div class="col-lg-3">
+                <div class="form-group">
+                <label class= "form-control-label"> <h5> By: </h5> </label>
+                <select class="form-control mediums" name= "mediums[]" id="medium_${indexOfOrders}">
                 <option selected="true" disabled>Choose Medium</option>
                 @foreach($mediums as $medium)
               <option value="{{ $medium->id }}">{{ $medium->name }}</option>
                 @endforeach
                 </select> 
                 </div>
-                <div class="col-md-2 d-flex">
-                <label class= 'p-2 col-md-5'> <h5> Qty: </h5> </label>
-                <input type="number" class="form-control quantities col-md-8 p-2 " name="quantities[]" id="quantity_${indexOfOrders}" min="1" max="25" value="1">
                 </div>
-                <div class="col-md-2 d-flex">
-                <label class= 'p-2 col-md-6'>
+                <div class="col-lg-3">
+                <div class="form-group">
+                <label class= 'form-control-label'> <h5> Qty: </h5> </label>
+                <input type="number" class="form-control quantities p-2 " name="quantities[]" id="quantity_${indexOfOrders}" min="1" max="25" value="1">
+                </div>
+                </div>
+                <div class="col-lg-3">
+                <div class="form-group">
+                <label class= 'form-control-label'>
                   <h5>
-                  Price:
+                  Price(Rs.):
                   </h5> 
                 </label>
-                <h5 class="text-danger prices p-2 d-flex">
-                  <span>Rs. </span>
-                </h5>
-                  <input type="text" readonly name='prices[]' id="price_${indexOfOrders}" class="form-control prices col-md-8" value="0">
+                  <input type="text" readonly name='prices[]' id="price_${indexOfOrders}" class="form-control prices" value="0">
+                  </div>
               </div>
               <hr class="col-md-11">
 
-              </div>
+              </div>`
 
-    `
+    
       return selectOrder;
     }
     $('#add').on('click',function(){
       // $(createOrderColumn()).append('#select_order');
 
-
       $("#listOfOrders").append($(createOrderColumn()))
     })
 
-    $('#sub').on('click',Sub)
-    function Sub(){
+    $('#sub').on('click',sub)
+    function sub(){
       let d = $('[id="select_order"]');
       if(d.length >1) { d[d.length-1].remove();indexOfOrders--};
     }
@@ -271,11 +263,11 @@
 
 
     $(document).on("change",".items",Change)
-
-    $(document).on("change",".mediums",Change)
-
+    $(document).on("change",".mediums",Change)  
     $(document).on('change',".quantities",Change)
     var total_price = 0;
+    selectedItemMedium=[];
+
 function Change(){
       let medium = $('#medium_'+indexOfOrders).val();
       let index = ($('#medium_'+indexOfOrders)[0].id).split("_")[1];
@@ -285,16 +277,17 @@ function Change(){
       getPrice(medium,item,index,quantity,place_id)
       let medium_total = $('.mediums').map(function(){return $(this).val();}).get();
       let item_total = $('.items').map(function(){return $(this).val();}).get();
-      let result = false;
-          for(let i = 0; i < item_total.length;i++) {
-            if(item_total.indexOf(item_total[i]) !== item_total.lastIndexOf(item_total[i]) && medium_total.indexOf(medium_total[i]) !== medium_total.lastIndexOf(medium_total[i])){
-                result = true;
-                break;
-            }
-          }
-          if(result) {
-            Sub();
-          } 
+      console.log(selectedItemMedium)
+      let result = selectedItemMedium.includes((item.toString()+medium.toString()))
+      for(var i=0; i<=item_total.length-1;i++){
+        selectedItem= item_total[i].toString();
+        selectedMedium = medium_total[i].toString();
+        selectedItemMedium[i] = selectedItem + selectedMedium;
+      }
+  
+      if(result){
+        sub();
+      }
         
 }
 
@@ -306,7 +299,7 @@ function getPrice(medium,item,index,quantity,place_id){
         total_price+=parseInt($('#price_'+index).val());      
     })
 }
-   
+    
   
 
 //Khalti Payment
@@ -319,7 +312,7 @@ function getPrice(medium,item,index,quantity,place_id){
             "eventHandler": {
                 onSuccess (payload) {
                     // hit merchant api for initiating verfication
-                    $('#is_finalize').val(1);
+                    $('#is_finalize').val(1); 
                     alert('Success')
                     console.log(payload)
                 },
@@ -331,7 +324,8 @@ function getPrice(medium,item,index,quantity,place_id){
                 }
             }
         };
-
+        
+        
         var checkout = new KhaltiCheckout(config);
         var btn = document.getElementById("khalti_payment");
         btn.onclick = function () {

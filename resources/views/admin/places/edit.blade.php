@@ -3,8 +3,8 @@
 
 <div class="col-12">
   <div id="accordion">
-    <div class="card bg-default ">
-      <div class="card-header bg-default" id="headingOne">
+    <div class="card bg-white ">
+      <div class="card-header bg-white" id="headingOne">
         <h5 class="mb-0">
           <a class="btn btn-secondary" href="{{ action('Admin\PlaceController@index') }}">
             <i class="fa fa-arrow-circle-left"></i>
@@ -39,7 +39,7 @@
                 @enderror
               </div>
               <div class="col-md-4 mb-3">
-                <label for="latitude" class="text-md-left text-white">{{ __('Latitude') }}</label>
+                <label for="latitude" class="text-md-left">{{ __('Latitude') }}</label>
                 <input id="latitude" type="text" class="form-control @error('latitude') is-invalid @enderror"
                   name="latitude" value="{{ $place->latitude }}" autocomplete="off" autofocus>
 
@@ -50,7 +50,7 @@
                 @enderror
               </div>
               <div class="col-md-4 mb-3">
-                <label for="longitude" class="text-md-left text-white">{{ __('Longitude') }}</label>
+                <label for="longitude" class="text-md-left">{{ __('Longitude') }}</label>
 
                 <input id="longitude" type="text" class="form-control @error('longitude') is-invalid @enderror"
                   name="longitude" value="{{ $place->longitude }}" autocomplete="off" autofocus>
@@ -65,7 +65,7 @@
             <div class="row">
               <div class="col-md-12 d-flex">
                 <div class="col-md-6 mb-3">
-                  <label class=" text-md-left text-white">{{ __('Coordinates') }}</label>
+                  <label class=" text-md-left">{{ __('Coordinates') }}</label>
 
                   <div class="mapContainer" style="width:100%;">
                     <div id="mapId" style="height: 400px; width:100%; overflow: hidden;"></div>
@@ -80,10 +80,7 @@
                         <nav>
                           <div class="nav nav-tabs nav-fill p-2" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active btn btn-primary mr-2" id="nav-home-tab" data-toggle="tab"
-                              href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Per Medium</a>
-                            <a class="nav-item nav-link btn btn-success" id="nav-profile-tab" data-toggle="tab"
-                              href="#nav-profile" role="tab" aria-controls="nav-profile"
-                              aria-selected="false">Perseptic</a>
+                              href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Edit Price</a>
                           </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -108,7 +105,7 @@
                                     @foreach($mediums as $ind=>$medium)
                                     <td><input class="form-control price"
                                         name="prices[{{ $item->id }}][{{ $medium->id }}]"
-                                        date-id="{{ [$item->id][$medium->id]['price'] ?? '-' }}"
+                                        data-id="{{ [$item->id][$medium->id]['price'] ?? '-' }}"
                                         id="price_{{ $item->id }}_{{ $medium->id }}">
                                     </td>
                                     @endforeach
@@ -116,24 +113,6 @@
                                   @endforeach
                                 </tbody>
                               </form>
-                            </table>
-                          </div>
-                          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <table class="table text-center" cellspacing="0">
-                              <thead>
-                                <tr>
-                                  <th>Item</th>
-                                  <th>Price</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                @foreach($items as $item)
-                                <tr>
-                                  <td>{{ $item->name }}</td>
-                                  <td style="width:50%"> <input type="text" name="perseptic" class="form-control"> </td>
-                                </tr>
-                                @endforeach
-                              </tbody>
                             </table>
                           </div>
                         </div>

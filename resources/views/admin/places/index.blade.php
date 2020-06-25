@@ -10,13 +10,13 @@
 
           <button class="btn btn-link collapsed text-dark" data-toggle="collapse" data-target="#collapseOne"
             aria-expanded="true" aria-controls="collapseOne">
-            <h3> <strong>Add New Place</strong> </h3>
+            <h3> Add New Place </h3>
           </button>
 
         </div>
       </div>
-      <div id="collapseOne" class="collapse bg-white show {{ $errors->count() ? 'show': '' }}" aria-labelledby="headingOne"
-        data-parent="#accordion">
+      <div id="collapseOne" class="collapse bg-white show {{ $errors->count() ? 'show': '' }}"
+        aria-labelledby="headingOne" data-parent="#accordion">
         <div class="card-body mt-2">
           <form method="post" action="{{ action('Admin\AmountController@store') }}">
             @csrf
@@ -74,10 +74,8 @@
                         <nav>
                           <div class="nav nav-tabs nav-fill p-2" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active btn btn-primary mr-2" id="nav-home-tab" data-toggle="tab"
-                              href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Per Medium</a>
-                            <a class="nav-item nav-link btn btn-success" id="nav-profile-tab" data-toggle="tab"
-                              href="#nav-profile" role="tab" aria-controls="nav-profile"
-                              aria-selected="false">Perseptic</a>
+                              href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Price</a>
+
                           </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -108,24 +106,6 @@
                               </form>
                             </table>
                           </div>
-                          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <table class="table text-center" cellspacing="0">
-                              <thead>
-                                <tr>
-                                  <th>Item</th>
-                                  <th>Price</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                @foreach($items as $item)
-                                <tr>
-                                  <td>{{ $item->name }}</td>
-                                  <td style="width:50%"> <input type="text" name="perseptic" class="form-control"> </td>
-                                </tr>
-                                @endforeach
-                              </tbody>
-                            </table>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -140,6 +120,7 @@
         </div>
       </div>
     </div>
+    @if(count($places)>=1)
     <div class="col-md-12 mt-3">
       <div class="card shadow">
         <div class="card-header  border-0">
@@ -164,20 +145,16 @@
                 <td>{{ $place->latitude }}</td>
                 <td>{{ $place->longitude }}</td>
                 <td>
-                  <form method="post" action="{{ action('Admin\PlaceController@destroy', $place->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <a class="btn btn-sm btn-secondary" href="{{ action('Admin\PlaceController@edit', $place->id) }}">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                    <button class="btn btn-danger btn-sm">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                    <a class="btn btn-info btn-sm view text-white" data-toggle="modal" data-target="#exampleModalLong"
-                      data-id="{{ $place->id }}">
-                      <i class="fa fa-eye"></i>
-                    </a>
-                  </form>
+                  <a class="btn btn-sm btn-secondary" href="{{ action('Admin\PlaceController@edit', $place->id) }}">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDeletion">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <a class="btn btn-info btn-sm view text-white" data-toggle="modal" data-target="#exampleModalLong"
+                    data-id="{{ $place->id }}">
+                    <i class="fa fa-eye"></i>
+                  </a>
                 </td>
               </tr>
               @endforeach
@@ -209,6 +186,23 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="confirmDeletion">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>Do you want to delete this?</h4>
+      </div>
+      <div class="modal-footer">
+        <form method="post" action="{{ action('Admin\PlaceController@destroy', $place->id) }}">
+          @csrf
+          @method('DELETE')
+          <button class="btn btn-danger">Confirm</button>
+        </form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -256,10 +250,34 @@
     </div>
   </div>
 </div>
-
+@else
+<div class="col-md-12 text-center pt-4">
+  <h3 class="text-danger">No Places Found</h3>
+</div>
+@endif
 @endsection
 @section('scripts')
 <script>
+  $('.view').on('click',function(){
+    let place_id = $(this).data('id')
+    getAmountsForPlace(place_id);
+  })
+  function getAmountsForPlace(place_id) {
+    axios.get('https://global.test/getPlace/' + place_id).then(function (response) {
+      let data = response.data[0];
+      let name = data['name']
+      let amounts = data['amounts']
+      $(".price").text("-")
+    amounts.forEach(e => {
+        let item_id = e['item_id']
+        let medium_id = e['medium_id']
+        let price = e['price'] || "-"
+        $(`#price_${item_id}_${medium_id}`).text(parseInt(price)||'-')
+        $('.placeName').text(name);
+      })
+    })
+  } 
+
   var mymap = L.map('mapId').setView([27.4368, 85.0026], 12);
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -275,26 +293,7 @@
         draggable: true
     }
     //get amount of place
-    function getAmountsForPlace(place_id) {
-	axios.get('https://global.test/getPlace/' + place_id).then(function (response) {
-		let data = response.data[0];
-	  let name = data['name']
-		let amounts = data['amounts']
-		$(".price").text("-")
-  amounts.forEach(e => {
-      console.log(e)
-			let item_id = e['item_id']
-			let medium_id = e['medium_id']
-			let price = e['price'] || "-"
-			$(`#price_${item_id}_${medium_id}`).text(parseInt(price)||'-')
-      $('.placeName').text(name);
-		})
-	})
-} 
-$('.view').on('click',function(){
-  let place_id = $(this).data('id')
-  getAmountsForPlace(place_id);
-})
+  
 //get latitude and longitude
     function getLatLng(e) {
        $('#longitude').val(this.getLatLng().lng);

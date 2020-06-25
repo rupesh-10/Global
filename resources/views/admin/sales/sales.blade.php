@@ -11,6 +11,8 @@
         <thead>
           <tr>
             <th>S.N</th>
+            <th>Date</th>
+            <th>Order ID</th>
             <th style="width:10%" class="text-center">Orders</th>
             <th>Client's Name</th>
             <th> Address</th>
@@ -18,9 +20,13 @@
           </tr>
         </thead>
         <tbody>
+          @if(count($orders)>=1)
           @foreach($orders as $key=>$order)
           <tr>
             <td>{{ $key+1 }}</td>
+            <td>{{ $order->created_at->toDateString() }}</td>
+            <td class="text-danger">GS{{ $order->id }}</td>
+
             <td>
               <table class="table-responsive p-3">
                 <tr class="bg-info">
@@ -30,7 +36,7 @@
                   <th>Quantity</th>
                 </tr>
                 @foreach($order->saleItem as $sale)
-                <tr class="bg-warning text-white">  
+                <tr class="bg-warning text-white">
                   <td>{{ $sale->item->name }}</td>
                   <td> {{ $sale->medium->name }}</td>
                   <td>{{ $sale->price }}</td>
@@ -51,5 +57,5 @@
   </div>
 </div>
 </div>
-
+@endif
 @endsection

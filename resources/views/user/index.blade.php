@@ -100,18 +100,18 @@ data-name="{{$place->name}}" >{{ $place->name }}</li>
 </div> --}}
 {{-- Map --}}
 <div class="map">
-<div id="mapid">
-</div>
+  <div id="mapid">
+  </div>
 </div>
 {{-- /Map --}}
 
 {{-- Selection Division --}}
 
 
-  <div style="position:absolute; left:1%; bottom:3%; z-index:2000; width:15%;">
-    <button class="btn btn-danger" style="width:100%;" id="setMarker">
-      <i class="fa fa-map-marker"></i> Set Marker
-    </button>
+<div class="p-2" style="position:absolute; left:1%; bottom:3%; z-index:2000;">
+  <button class="btn btn-danger" style="width:100%;" id="setMarker">
+    <i class="ni ni-pin-3"></i> Set Marker
+  </button>
 </div>
 
 <!-- Modal -->
@@ -211,28 +211,6 @@ data-name="{{$place->name}}" >{{ $place->name }}</li>
 				accessToken: 'pk.eyJ1IjoicnVwZXNoLTEwIiwiYSI6ImNrNnJyeDRzNTA5OTQzbHJ6ODA1eGxoMDcifQ.3OipB5IRVOeLv-r2Q4lQIA'
 			}).addTo(mymap);
 
-			// Jump to location on select location
-			// $(".select2").change(function () {
-			// 	let lat = $($("#place option:selected")[0]).data('lat');
-			// 	let lng = $($("#place option:selected")[0]).data('lng');
-			// 	let name = $($("#place option:selected")[0]).data('name');
-			// 	let place_id = $($("#place option:selected")[0]).data('id');
-			// 	// var marker = L.marker([lat, lng],{}).addTo(mymap);
-			// 	mymap.flyTo([lat, lng], 17);
-			// 	markers[place_id].bindPopup(`<b>${name}</b>`).openPopup();
-			// 	getAmountsForPlace(place_id);
-      //   $('.location').text(name);
-      //   $('#tabs').show()
-
-			// })
-
-      // var searchLayer = L.layerGroup().addTo(mymap);
-      // mymap.addControl( new L.Control.Search({layer: searchLayer}) );
-      // mymap.addControl( new LeafletSearch({
-      //   layer: dataLayer
-      // }) );
-      // });
-     
       L.control.scale().addTo(mymap);
       var searchControl = new L.esri.Controls.Geosearch({
         geocodingQueryParams: {countrycodes: 'npl'}
@@ -288,7 +266,8 @@ function showPosition(position) {
   }
   getLocation()
 })
-
+  $('#selectedLat').val(dragMarker.getLatLng().lat)
+  $('#selectedLng').val(dragMarker.getLatLng().lng)
 	//load data on table from specific location
 	function onClick(e) {
 		let place_id = $(this)[0]['options']['place_id'];

@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     {{-- OwlCarousel --}}
-
+    <link href="{{asset('nucleo/css/nucleo.css')}}" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="{{ asset('css/argon.css')}}" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.3.7/dist/leaflet-search.src.css" />
@@ -15,8 +17,8 @@
         href="https://cdn-geoweb.s3.amazonaws.com/esri-leaflet-geocoder/0.0.1-beta.5/esri-leaflet-geocoder.css">
 
 
-
-    <title>Document</title>
+    @yield('styles')
+    <title>GLobal Suppliers</title>
 </head>
 
 <body>
@@ -25,10 +27,10 @@
         .dataTables_filter label {
             color: black;
         }
-      
+
         #mapid {
             width: 100%;
-            height:91vh;
+            height: 91vh;
         }
 
         #mapSearchContainer {
@@ -43,11 +45,29 @@
             border: solid 1px #bbb;
             background-color: #f8f8f8;
         }
+
+        .title {
+            color: #353434;
+            font-size: 3em;
+            text-align: left;
+            letter-spacing: 1px;
+            font-weight: 400;
+            font-family: 'Inconsolata', monospace;
+
+        }
+
+        a.carousel-control-next.test,
+        a.carousel-control-prev.test {
+            color: #0e0f10;
+            text-align: center;
+            opacity: 0.9;
+            font-size: 2em;
+        }
     </style>
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-gradient-primary shadow-sm">
         <div class="col-3 offset-1">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="fa fa-globe text-danger" style="font-size:28px;"></i>
+            <a class="navbar-brand d-flex" href="{{ url('/') }}">
+                <i class="ni ni-world text-danger mr-2" style="font-size:28px;"></i>
                 <strong> Global Suppliers</strong>
             </a>
         </div>
@@ -56,21 +76,31 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="">Home</a>
+                <li class="text-right">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" style="outline:none;">
+                        <span></span>
+                        <span></span>
+                    </button>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">About</a>
+                    <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">Contact us</a>
+                    <a class="nav-link" href="/about">About Us</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">Contact us</a>
                 </li>
                 <!-- Authentication Links -->
                 @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}"> Login</a>
                 </li>
                 @if (Route::has('register'))
                 <li class="nav-item">
@@ -88,51 +118,77 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      
-                    <a class="dropdown-item" href="/user/profile/{{ Auth::user()->id }}">My Profile</a>
-                    <a class="dropdown-item" href="/user/orders/{{ Auth::user()->id }}">My Orders</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+
+                        <a class="dropdown-item" href="/user/info">My Info</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                           document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
+                            @csrf
                         </form>
                     </div>
                 </li>
                 @endguest
             </ul>
+
         </div>
         </div>
     </nav>
     <div class="modal" tabindex="-1" role="dialog" id="guestModal">
         <div class="modal-dialog" role="document">
-        <form action="/guest/order">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title">Track Your Order</h3>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+            <form action="/guest/order">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Track Your Order</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-       <div class="modal-body">
-              <label>Phone Number</label>
-              <input type="text" name="phone_number" class="form-control">
-        </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary">Track</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-         </form>
+                    <div class="modal-body">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone_number" class="form-control">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary">Track</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
 
         </div>
-      </div>
-    <div id="app">
+    </div>
+    <div id="main-content">
         @yield('content')
     </div>
+    <footer class="footer">
+        <div class="row align-items-center m-0">
+            <div class="col-md-6">
+                <div class="copyright text-center text-xl-left text-muted">
+                    &copy; 2020 <a href="https://www.alphatech.com.np" class="font-weight-bold ml-1"
+                        target="_blank">Alpha Tech</a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link" target="_blank">Global Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about" class="nav-link" target="_blank">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/contact" class="nav-link" target="_blank">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/privacy" class="nav-link" target="_blank">Privacy and Policy</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 <script src="{{ asset('js/map.js') }}"></script>
 <script src="{{asset('js/app.js')}}"></script>

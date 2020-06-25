@@ -97,6 +97,6 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         $item->delete();
-        return redirect('/admin/item')->with('success','Item Deleted Successfully');
+        return redirect('/admin/item')->with('warning','Item Deleted Successfully');
     }
 }

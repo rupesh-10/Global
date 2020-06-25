@@ -15,13 +15,13 @@ class CreateAmountsTable extends Migration
     {
         Schema::create('amounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('item_id');
-            $table->index('item_id');
-            $table->unsignedBigInteger('medium_id');
-            $table->index('medium_id');
+            $table->bigInteger('item_id')->unsigned()->nullable();
+            $table->foreign('item_id')->references('id')->on('items')->onUpdate('cascade')->onDelete('set null');
+            $table->bigInteger('medium_id')->unsigned()->nullable();
+            $table->foreign('medium_id')->references('id')->on('media')->onUpdate('cascade')->onDelete('set null');
             $table->decimal('price')->nullable();
-            $table->unsignedBigInteger('place_id');
-            $table->index('place_id');
+            $table->bigInteger('place_id')->nullable()->unsigned();
+            $table->foreign('place_id')->references('id')->on('places')->onUpdate('cascade')->onDelete('set null');
             $table->boolean('is_perseptic');
             $table->timestamps();
         });

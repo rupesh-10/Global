@@ -87,7 +87,7 @@ class PlaceController extends Controller
             'latitude' =>'required',
             'longitude' =>'required',
         ]);
-        $place = Place::find($id);
+        $place = Place::findorFail($id);
         $place->name = request()->get('place');
         $place->latitude = request()->get('latitude');
         $place->longitude = request()->get('longitude');
@@ -119,6 +119,12 @@ class PlaceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $place = Place::findorFail($id);
+        $amounts = Amount::where('place_id',$id)->get();
+        foreach($amounts as $amount){
+            $amount->delete();
+        }
+        $place->delete();
+        return redirect()->back()->with("warning","Place Deleted Successfully");
     }
 }

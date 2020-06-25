@@ -2,8 +2,8 @@
 @section('content')
         <div class="col-12">
             <div id="accordion">
-                <div class="card bg-default ">
-                    <div class="card-header bg-default" id="headingOne">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
                             <a class="btn btn-secondary" href="{{ action('Admin\MediumController@index') }}">
                                 <i class="fa fa-arrow-circle-left"></i>
