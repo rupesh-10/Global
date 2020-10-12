@@ -45,8 +45,8 @@ class AdminController extends Controller
     public function updatePassword($id){
         request()->validate([
             'currentpassword'=> 'required',
-            'password' => 'required|min:8|string|confirmed',
-            'confirmpassword'=> 'required',
+            'password' => 'required|min:8|string',
+            'confirmpassword'=> 'required|confirmed',   
         ]);
         $admin = User::findorFail($id);
         if(request()->get('currentpassword'!=hash($admin->password))){

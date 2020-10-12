@@ -22,7 +22,7 @@
                 <label class="col-md-3">Email: </label>
                 <input type="email" class="form-control col-md-7 @error('email') is-invalid @enderror " name="email" value="{{ $user->email }}">
                 @error('email')
-                <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert">    
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror

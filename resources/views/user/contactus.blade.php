@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<div class="main-content bg-default">
-    <div class="header bg-gradient-primary py-7 py-lg-8">
+<div class="bg-default">
+    <div class="header bg-orange py-7 py-lg-8">
         <div class="container">
             <div class="header-body text-center mb-7">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 col-md-6">
                         <h1 class="text-white">Global Suppliers</h1>
-                        <p class="text-lead text-light">
+                        <p class="text-lead text-white">
                             GLobal Suppliers is the finest suppliers of sand,gravel,stone etc in Hetauda.
                         </p>
                     </div>

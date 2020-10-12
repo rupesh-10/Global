@@ -57,7 +57,7 @@
 		</table>
 	</div>
 		@else
-		<h2 class="text-center" style="font-weight:600; font-size:40px; margin-top:20%;"> Sorry, We can't Find your Order!! Go <a class="text-info" href="/">Here</a> for Order</h2>
+		<h3 class="text-center" style="font-weight:500; font-size:30px; margin-top:20%;"> Sorry, We can't Find this number's  Order! Go <a class="text-info" href="/">Here</a> for Order</h3>
 		@endif
 
 		@endsection

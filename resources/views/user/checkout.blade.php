@@ -158,7 +158,7 @@
     <div class="modal-content">
 
       <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modaSSSSSl" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         <h2 class="text-danger text-center">Login, for easy order tracking and information</h2>
@@ -180,9 +180,9 @@
               $('#amt').val(total_price);
               $('#tAmt').val(total_price);
               $("#payWithEsewa").submit();
-             
+
             })
-        }); 
+        });
 </script>
 <script>
   $(document).ready(function(){
@@ -196,12 +196,12 @@
     else{
       $('#quantity').attr('disabled',true)
     }
-    }); 
+    });
     let indexOfOrders= 0;
     function createOrderColumn(){
       indexOfOrders++;
       // console.log(indexOfOrders)
-      var selectOrder = 
+      var selectOrder =
    ` <div class="row" id="select_order">
                 <div class="col-lg-3">
                 <div class="form-group">
@@ -222,7 +222,7 @@
                 @foreach($mediums as $medium)
               <option value="{{ $medium->id }}">{{ $medium->name }}</option>
                 @endforeach
-                </select> 
+                </select>
                 </div>
                 </div>
                 <div class="col-lg-3">
@@ -236,7 +236,7 @@
                 <label class= 'form-control-label'>
                   <h5>
                   Price(Rs.):
-                  </h5> 
+                  </h5>
                 </label>
                   <input type="text" readonly name='prices[]' id="price_${indexOfOrders}" class="form-control prices" value="0">
                   </div>
@@ -245,7 +245,7 @@
 
               </div>`
 
-    
+
       return selectOrder;
     }
     $('#add').on('click',function(){
@@ -263,7 +263,7 @@
 
 
     $(document).on("change",".items",Change)
-    $(document).on("change",".mediums",Change)  
+    $(document).on("change",".mediums",Change)
     $(document).on('change',".quantities",Change)
     var total_price = 0;
     selectedItemMedium=[];
@@ -284,11 +284,11 @@ function Change(){
         selectedMedium = medium_total[i].toString();
         selectedItemMedium[i] = selectedItem + selectedMedium;
       }
-  
+
       if(result){
         sub();
       }
-        
+
 }
 
 function getPrice(medium,item,index,quantity,place_id){
@@ -296,15 +296,15 @@ function getPrice(medium,item,index,quantity,place_id){
 		.then(function (response) {
       let price = response.data.price;
       $('#price_'+index).val((parseFloat(price)*quantity)||'0');
-        total_price+=parseInt($('#price_'+index).val());      
+        total_price+=parseInt($('#price_'+index).val());
     })
 }
-    
-  
+
+
 
 //Khalti Payment
    var config = {
-          
+
             "publicKey": "test_public_key_47afe119e7b5446c82b17ecdcc5549ad",
             "productIdentity": "1234567890",
             "productName": "Dragon",
@@ -312,7 +312,7 @@ function getPrice(medium,item,index,quantity,place_id){
             "eventHandler": {
                 onSuccess (payload) {
                     // hit merchant api for initiating verfication
-                    $('#is_finalize').val(1); 
+                    $('#is_finalize').val(1);
                     alert('Success')
                     console.log(payload)
                 },
@@ -320,12 +320,12 @@ function getPrice(medium,item,index,quantity,place_id){
                     alert("Error")
                 },
                 onClose () {
-                   
+
                 }
             }
         };
-        
-        
+
+
         var checkout = new KhaltiCheckout(config);
         var btn = document.getElementById("khalti_payment");
         btn.onclick = function () {

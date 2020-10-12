@@ -2,10 +2,10 @@
 @section('content')
 
 <div class="main-content bg-default">
-    <div class="header bg-gradient-primary py-7 py-lg-8">
+    <div class="header bg-orange py-7 py-lg-8">
         <div class="container">
             <div class="header-body text-center mb-7">
-                <div class="row justify-content-center">
+                <div class="row p-2 justify-content-center">
                     <div class="card col-md-6">
                         <div class="card-body">
                             <h3>Your Orders:</h3>
@@ -66,8 +66,7 @@
                                 </form>
                             </div>
                             <div class="address-con mb-4">
-                                <button class="btn btn-warning">Continue as Cash On Delivery</button>
-
+                                <a class="btn btn-warning" href="/">Continue as Cash On Delivery</a>
                             </div>
                         </div>
                     </div>

@@ -17,7 +17,7 @@ public function handle($request, Closure $next)
 {
     if (!Auth::check())
     {
-        return redirect('/admin/login');
+        return redirect('/login');
     }
     
     $user = Auth::user();
@@ -26,7 +26,7 @@ public function handle($request, Closure $next)
         return $next($request);
     };
 
-    return redirect('/admin/login');
+    return redirect('/login');
 
     }
 }

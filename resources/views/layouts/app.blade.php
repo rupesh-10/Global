@@ -18,7 +18,7 @@
 
 
     @yield('styles')
-    <title>GLobal Suppliers</title>
+    <title>Global Suppliers</title>
 </head>
 
 <body>
@@ -64,10 +64,10 @@
             font-size: 2em;
         }
     </style>
-    <nav class="navbar navbar-expand-md navbar-dark bg-gradient-primary shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark bg-orange shadow-sm">
         <div class="col-3 offset-1">
             <a class="navbar-brand d-flex" href="{{ url('/') }}">
-                <i class="ni ni-world text-danger mr-2" style="font-size:28px;"></i>
+                <i class="ni ni-world text-primary mr-2" style="font-size:28px;"></i>
                 <strong> Global Suppliers</strong>
             </a>
         </div>
@@ -149,7 +149,7 @@
 
                     <div class="modal-body">
                         <label>Phone Number</label>
-                        <input type="text" name="phone_number" class="form-control">
+                        <input type="text" name="phone_number" class="form-control" placeholder="Your Phone Number">
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-primary">Track</button>
@@ -163,8 +163,7 @@
     <div id="main-content">
         @yield('content')
     </div>
-    <footer class="footer">
-        <div class="row align-items-center m-0">
+        <div class="row align-items-center m-0 footer">
             <div class="col-md-6">
                 <div class="copyright text-center text-xl-left text-muted">
                     &copy; 2020 <a href="https://www.alphatech.com.np" class="font-weight-bold ml-1"
@@ -188,7 +187,7 @@
                 </ul>
             </div>
         </div>
-    </footer>
+
 </body>
 <script src="{{ asset('js/map.js') }}"></script>
 <script src="{{asset('js/app.js')}}"></script>

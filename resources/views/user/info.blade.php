@@ -1,19 +1,24 @@
 @extends('layouts.app')
 @section('content')
-<div class="card mt-3 p-2" style="width: 20rem;">
+<div class="container">
+<div class="row p-4">
+<div class="card p-2  m-auto bg-orange col-md-6">
 	<div class="card-head text-center">
-		<h4>Personal Information</h4>
+		<h3 class="text-white">Personal Information</h3>
 	</div>
-	<div class="card-body text-center ">
-		<h5>{{ $user->name }}</h5>
-		<h5>{{ $user->phone_number }}</h5>
-	    <h5>{{ $user->email }}</h5>
-		<h5>Orders : {{ count($orders) }} </h5>
+	<div class="card-body text-center">
+		<h5 class="text-white">{{ $user->name }}</h5>
+		<h5 class="text-white">{{ $user->phone_number }}</h5>
+	    <h5 class="text-white">{{ $user->email }}</h5>
+		<h5 class="text-white">Orders : {{ count($orders) }} </h5>
 	</div>
 	<div class="card-foot text-right">
-<a class="text-info" href="/user/info/edit">Edit</a>
+  <a href="/user/info/edit"><h4 class="text-white">Edit</h4></a>
+  <a href="/password"><h4 class="text-yellow">Change Password</h4></a>
 	</div>
   </div>
+</div>
+</div>
 @if(count($orders)>=1)
 <div class="p-4">
 	<h3 class="text-center">Your Orders</h3>
@@ -68,7 +73,7 @@
 			</table>
 		</div>
 		@else
-		<h2 class="text-center" style="font-weight:600; font-size:40px; margin-top:10%;"> Sorry No Order Yet!! Go <a class="text-info" href="/">Here</a> for Order</h2>
+		<h3 class="text-center" style="font-weight:600; font-size:35px; margin-top:10%;"> Sorry No Order Yet!! Go <a class="text-info" href="/">Here</a> for Order</h3>
 		@endif
 
 		@endsection
