@@ -12,16 +12,19 @@
 */
 
 		Auth::routes();
-		
+
 		// Get Price and Place
 		Route::get('/', 'HomeController@index')->name('home');
 		Route::get('/getPlaces', 'HomeController@getPlaces');
 		Route::get('/getPlace/{id}', 'HomeController@getPlace');
 		Route::get('/getPrice', 'HomeController@getPrice');
-		
-//    Admin Routes 
+
+//    Admin Routes
 
 	Route::prefix('admin')->middleware(['auth','admin'])->namespace('Admin')->group(function () {
+		Route::get('/',function(){
+			return redirect('/admin/dashboard');
+		});
 		Route::get('dashboard','AdminController@dashboard');
 		Route::get('transaction','AdminController@transaction');
 		Route::resource('amount', 'AmountController');
@@ -55,13 +58,13 @@
 			'as' => 'checkout.payment.esewa.process',
 			'uses' => 'EsewaController@payment',
 		]);
-		
+
 		Route::get('/checkout/payment/{order}/esewa/completed', [
 			'name' => 'eSewa Payment Completed',
 			'as' => 'checkout.payment.esewa.completed',
 			'uses' => 'EsewaController@completed',
 		]);
-		
+
 		Route::get('/checkout/payment/{order}/failed', [
 			'name' => 'eSewa Payment Failed',
 			'as' => 'checkout.payment.esewa.failed',

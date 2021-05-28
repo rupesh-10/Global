@@ -65,6 +65,10 @@
                                     </button>
                                 </form>
                             </div>
+                             <div class="address-con mb-4">
+                                <button class="btn btn-secondary" id="stripe_payment">Pay with Stripe</button>
+
+                            </div>
                             <div class="address-con mb-4">
                                 <a class="btn btn-warning" href="/">Continue as Cash On Delivery</a>
                             </div>
@@ -75,31 +79,38 @@
         </div>
     </div>
 </div>
+<script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script>
 <script>
+
     //Khalti Payment
-   var config = {
-          
-          "publicKey": "test_public_key_47afe119e7b5446c82b17ecdcc5549ad",
-          "productIdentity": "1234567890",
-          "productName": "Dragon",
-          "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-          "eventHandler": {
-              onSuccess (payload) {
-                  // hit merchant api for initiating verfication
-                  $('#is_finalize').val(1); 
-                  alert('Success')
-                  console.log(payload)
-              },
-              onError (error) {
-                  alert("Error")
-              },
-              onClose () {
-                 alert("closing")
-              }
-          }
-      };
-      
-      
+    var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_dc74e0fd57cb46cd93832aee0a390234",
+            "productIdentity": "1234567890",
+            "productName": "Dragon",
+            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                },
+                onError (error) {
+                    console.log(error);
+                },
+                onClose () {
+                    console.log('widget is closing');
+                }
+            }
+        };
+
+
       var checkout = new KhaltiCheckout(config);
       var btn = document.getElementById("khalti_payment");
       btn.onclick = function () {

@@ -5,7 +5,7 @@
           <i class="ni ni-world text-danger mr-2" style="font-size:25px;"></i>
           <strong> Global Suppliers</strong>
       </a>
-    
+
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
       aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
               <i class="ni ni-single-02"></i>
               <span>Change Password</span>
             </a>
-           
+
         </div>
       </li>
       <!-- Navigation -->
@@ -84,10 +84,10 @@
             <i class="ni ni-pin-3 text-green"></i> Places
           </a>
         </li>
-    
+
       </ul>
       <div class="pt-4 d-flex text-danger">
-      &copy; <a href="https://www.alphatech.com.np" class="pl-2 ">Alpha Tech</a>
+      &copy; <a href="https://www.rupeshdhakal.com.np" class="pl-2 ">GLobal</a>
       </div>
       <!-- Divider -->
     </div>
